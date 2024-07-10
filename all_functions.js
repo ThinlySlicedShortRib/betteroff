@@ -548,3 +548,5 @@ window.toggleForm = function toggleForm(form, visibility) {
         console.error("Invalid action specified");
     }
 };
+
+console.log("functions loaded from GITHUB")
