@@ -178,7 +178,7 @@ window.resetForm = function resetForm(formName) {
         }
     }
 };
-console.log("resetForm fucntion loaded from CodeSandBox");
+
 
 
 // This function now directly accepts an HTML element
