@@ -440,3 +440,111 @@ window.toggleSummary = function toggleSummary(summary, visibility) {
         console.error("Invalid action specified");
     }
 };
+
+
+window.addEventListener('pageshow', function (event) {
+    if (event.persisted) {
+        // Page was loaded from cache, refresh the UI or reset the state
+        location.reload();
+    }
+});
+
+
+window.toggleFormAndSummary = function toggleFormAndSummary(
+    formId,
+    summaryId,
+    showElement,
+) {
+    // Find the summary and form elements by their `wized` attribute values
+    const summaryElement = document.querySelector(`[wized="${summaryId}"]`);
+    const summaryWrapper = summaryElement
+        ? summaryElement.closest('[wized="plan_summary_wrapper"]')
+        : null;
+    const formElement = document.querySelector(`[wized="${formId}"]`);
+    const formWrapper = formElement
+        ? formElement.closest('[wized="plan_form_wrapper"]')
+        : null;
+
+    // Reset visibility classes if wrappers are found
+    if (formWrapper) {
+        formWrapper.classList.remove("show-now", "hide");
+    }
+    if (summaryWrapper) {
+        summaryWrapper.classList.remove("show-now", "hide");
+    }
+
+    switch (showElement) {
+        case "summary":
+            // Show summary, hide form
+            if (formWrapper) {
+                formWrapper.classList.add("hide");
+            }
+            if (summaryWrapper) {
+                summaryWrapper.classList.add("show-now");
+            }
+            break;
+        case "form":
+            // Hide summary, show form
+            if (summaryWrapper) {
+                summaryWrapper.classList.add("hide");
+            }
+            if (formWrapper) {
+                formWrapper.classList.add("show-now");
+            }
+            break;
+        case "both":
+            // Show both summary and form
+            if (summaryWrapper) {
+                summaryWrapper.classList.add("show-now");
+            }
+            if (formWrapper) {
+                formWrapper.classList.add("show-now");
+            }
+            break;
+        case "none":
+            // Hide both summary and form
+            if (summaryWrapper) {
+                summaryWrapper.classList.add("hide");
+            }
+            if (formWrapper) {
+                formWrapper.classList.add("hide");
+            }
+            break;
+        default:
+            console.error("Invalid action specified");
+    }
+};
+
+//this function takes in 2 parameters,
+//1. complete attribute of the child
+//2. the option to show or hide. either "show", "hide"
+window.toggleForm = function toggleForm(form, visibility) {
+    // Find the summary and form elements by their `wized` attribute values
+
+    //remove selector
+    const selector = document.querySelector(form);
+    const wrapper = selector
+        ? selector.closest('[wized="plan_form_wrapper"]')
+        : null;
+
+    // Reset visibility classes
+    if (wrapper) {
+        wrapper.classList.remove("show-now", "hide");
+    } else {
+        //console.log('Could not get wrapper'+ form)
+    }
+
+    if (visibility === "hide") {
+        // Show summary, hide form
+        if (wrapper) {
+            wrapper.classList.add("hide");
+        }
+    } else if (visibility === "show") {
+        // Hide summary, show form
+        if (wrapper) {
+            wrapper.classList.add("show-now");
+        }
+    } else {
+        console.error("Invalid action specified");
+    }
+};
